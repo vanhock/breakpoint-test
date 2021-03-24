@@ -1,14 +1,22 @@
 <template>
-  <div id="app">
+  <div id="app" :data-theme="theme">
+    <v-header>
+      <theme-toggle @change="theme = $event" />
+    </v-header>
     <login />
   </div>
 </template>
 
 <script>
 import Login from "src/components/login/Login";
+import ThemeToggle from "src/components/ThemeToggle";
+import VHeader from "src/components/VHeader";
 export default {
   name: "App",
-  components: {Login}
+  components: {VHeader, ThemeToggle, Login},
+  data: () => ({
+    theme: 'default'
+  })
 };
 </script>
 

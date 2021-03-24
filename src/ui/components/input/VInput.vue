@@ -1,5 +1,5 @@
 <template>
-  <label :class="{ focused, invalid: !valid && showValidation }" class="v-input">
+  <label :class="{ focused, invalid }" class="v-input">
     <span v-if="label" class="v-input__label">
       {{ label }}
     </span>
@@ -12,15 +12,18 @@
       class="v-input__input"
       v-on="inputListeners"
     />
-    <span v-if="validationRule" class="v-input_validation">
-      {{ validationMessage }}
+    <span v-if="invalid" class="v-input__validation">
+      {{ currentValidationMessage }}
     </span>
+    <warning-svg class="v-input__warning" v-if="invalid" />
   </label>
 </template>
 
 <script>
+import WarningSvg from "../../incons/warning.svg"
 export default {
   name: "VInput",
+  components: {WarningSvg},
   props: {
     type: {
       type: String,
@@ -90,6 +93,9 @@ export default {
         },
       };
     },
+    invalid() {
+      return !this.valid && this.showValidation
+    }
   },
   watch: {
     value(current) {
@@ -126,7 +132,7 @@ export default {
     },
     validateByRule() {
       if (!this.validationRule) return true;
-      return this.currentValue.match(this.validationRule.regex);
+      return this.validationRule.regex.test(this.currentValue);
     },
   },
 };
@@ -135,6 +141,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../styles/vars";
 .v-input {
+  position: relative;
   display: block;
 
   &__label {
@@ -152,7 +159,7 @@ export default {
   &__input {
     width: 100%;
     height: var(--input-height);
-    padding: var(--indent-sm);
+    padding: var(--indent-sm) var(--indent-md) var(--indent-sm) var(--indent-sm);
     border: 1px solid var(--color-border);
     background-color: var(--color-bg);
     border-radius: var(--rounded-lg);
@@ -160,6 +167,11 @@ export default {
     outline: none;
     font-size: var(--text-md);
     color: var(--color-font);
+
+    &:-webkit-autofill {
+      background-color: var(--color-bg-second) !important;
+      appearance: auto !important;
+    }
 
     &:focus {
       box-shadow: var(--input-focus-box-shadow);
@@ -174,15 +186,27 @@ export default {
       -webkit-appearance: none;
       margin: 0;
     }
-
-    @media (max-width: $mobile) {
-      padding: 0;
-    }
   }
+  &.invalid .v-input__input {
+    border-color: var(--color-red)
+  }
+
   &__validation {
     position: absolute;
+    margin-top: calc(var(--input-height) + var(--indent-xs));
+    left: 0;
     color: var(--color-red);
     font-size: var(--text-xs);
+  }
+  &__warning {
+    position: absolute;
+    height: 20px;
+    right: 0;
+    bottom: calc(var(--input-height) / 4);
+    margin-right: var(--indent-xs);
+    path {
+      fill: var(--color-red);
+    }
   }
 }
 </style>

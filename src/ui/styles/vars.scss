@@ -40,6 +40,7 @@ $tablet: 1024px;
   --color-shadow: rgba(211, 214, 215, 0.25);
   --color-preloader: #1a59b3;
   --color-red: #c40505;
+  --color-green: #008000;
 
   --input-focus-box-shadow: 0 0 0 2px #1a59b3;
 }
@@ -49,10 +50,10 @@ $tablet: 1024px;
 }
 [data-theme='dark'] {
   /** Colors **/
-  --color-primary: #14243b;
+  --color-primary: #0649aa;
   --color-secondary: #333d51;
-  --color-bg: #1a202c;
-  --color-bg-second: #2d3748;
+  --color-bg: #080d16;
+  --color-bg-second: #16181c;
   --color-font: #fff;
   --color-font-light: #f5f5f5;
   --color-font-white: #dbdbdb;
@@ -60,7 +61,8 @@ $tablet: 1024px;
   --color-overlay: rgba(31, 31, 31, 0.45);
   --color-shadow: rgba(8, 16, 26, 0.25);
   --color-preloader: #1a59b3;
-  --color-red: #c40505;
+  --color-red: #a40404;
+  --color-green: #004e00;
 
   --input-focus-box-shadow: 0 0 0 2px #1d3557;
 }

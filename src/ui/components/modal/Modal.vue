@@ -1,5 +1,5 @@
 <template>
-  <div class="modal">
+  <div class="modal" @keydown.esc="handleClose">
     <slot></slot>
     <div class="modal__overlay" @click="handleClose" />
   </div>
@@ -8,12 +8,26 @@
 <script>
 export default {
   name: "Modal",
+  created() {
+    /**
+     * Close on esc
+     */
+    window.addEventListener("keydown", this.handleKeydown);
+  },
+  beforeDestroy() {
+    window.removeEventListener("keydown", this.handleKeydown);
+  },
   methods: {
     handleClose() {
-      this.$emit("close")
-    }
-  }
-}
+      this.$emit("close");
+    },
+    handleKeydown(e) {
+      if (e.key === "Escape") {
+        this.handleClose();
+      }
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
