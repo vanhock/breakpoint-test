@@ -1,12 +1,14 @@
 <template>
   <div id="app">
-    Hi!
+    <login />
   </div>
 </template>
 
 <script>
+import Login from "src/components/login/Login";
 export default {
-  name: "App"
+  name: "App",
+  components: {Login}
 };
 </script>
 
@@ -29,6 +31,7 @@ body {
 }
 
 #app {
+  height: 100%;
   min-height: 100%;
   border-bottom: var(--indent-md) solid transparent;
   box-sizing: border-box;

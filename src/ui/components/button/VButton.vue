@@ -20,8 +20,11 @@ export default {
   align-items: center;
   height: var(--button-height);
   padding: 0 var(--indent-sm);
+  box-sizing: border-box;
   border-radius: var(--rounded);
   background-color: var(--color-primary);
   color: var(--color-font-white);
+  font-weight: bold;
+  cursor: pointer;
 }
 </style>

@@ -3,13 +3,15 @@ $mobile: 720px;
 $tablet: 1024px;
 :root {
   /** Dimensions **/
+  --indent-xs: 5px;
   --indent-sm: 15px;
   --indent-md: 30px;
   --indent-lg: 60px;
   --header-height: 70px;
   --input-height: 40px;
-  --button-height: 70px;
-  --modal-min-width: 250px;
+  --button-height: 30px;
+  --button-wide-height: 40px;
+  --modal-min-width: 650px;
   --modal-min-height: 250px;
   --layout-max-width: 1280px;
   /** Border-radius **/
@@ -21,6 +23,7 @@ $tablet: 1024px;
   --text-sm: 14px;
   --text-md: 16px;
   --text-lg: 24px;
+  --title-color: var(--color-font-light);
 }
 :root,
 [data-theme='default'] {
@@ -33,12 +36,12 @@ $tablet: 1024px;
   --color-font-light: #7a7979;
   --color-font-white: #f5f5f5;
   --color-border: #cbd5e0;
-  --color-overlay: rgba(255, 255, 255, 0.45);
+  --color-overlay: rgba(0, 0, 0, 0.45);
   --color-shadow: rgba(211, 214, 215, 0.25);
   --color-preloader: #1a59b3;
   --color-red: #c40505;
 
-  --input-focus-box-shadow: 0 0 0 3px #1a59b3;
+  --input-focus-box-shadow: 0 0 0 2px #1a59b3;
 }
 [data-theme] {
   background-color: var(--color-bg-second);
@@ -59,5 +62,5 @@ $tablet: 1024px;
   --color-preloader: #1a59b3;
   --color-red: #c40505;
 
-  --input-focus-box-shadow: 0 0 0 3px #1d3557;
+  --input-focus-box-shadow: 0 0 0 2px #1d3557;
 }

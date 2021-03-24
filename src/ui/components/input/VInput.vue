@@ -1,18 +1,18 @@
 <template>
-  <label :class="{ focused, invalid: !isValid }" class="v-input">
+  <label :class="{ focused, invalid: !valid && showValidation }" class="v-input">
     <span v-if="label" class="v-input__label">
       {{ label }}
     </span>
     <input
       ref="input"
       v-bind="options"
-      :value="currentValue"
+      v-model="currentValue"
       :type="type"
       :placeholder="placeholder"
       class="v-input__input"
       v-on="inputListeners"
     />
-    <span class="v-input_validation" v-if="validationRule">
+    <span v-if="validationRule" class="v-input_validation">
       {{ validationMessage }}
     </span>
   </label>
@@ -38,6 +38,10 @@ export default {
       type: String,
       default: null,
     },
+    name: {
+      type: String,
+      default: null,
+    },
     options: {
       type: Object,
       default: () => ({}),
@@ -54,18 +58,20 @@ export default {
     },
     validationMessage: {
       type: String,
-      default: 'This field is required',
+      default: "This field is required",
     },
     required: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data: () => ({
+    componentName: 'VInput',
     currentValue: null,
     focused: false,
+    valid: true,
     showValidation: false,
-    currentValidationMessage: null
+    currentValidationMessage: null,
   }),
   computed: {
     inputListeners() {
@@ -84,57 +90,62 @@ export default {
         },
       };
     },
-    isValid() {
-      if (!this.required) return true;
-      if (!this.validateByValue()) {
-        this.currentValidationMessage = this.validationMessage;
-        return false;
-      }
-      if (!this.validateByRule()) {
-        this.currentValidationMessage = this.validationRule.message
-        return false
-      }
-      return true
-    }
   },
   watch: {
     value(current) {
       this.currentValue = current;
     },
+    currentValue() {
+      this.setValid();
+      this.$emit("input", this.currentValue);
+    }
   },
   created() {
     this.currentValue = this.value;
+    this.setValid();
+    this.$emit("input", this.currentValue);
   },
   methods: {
     setFocus() {
       this.$refs.input.focus();
     },
+    setValid() {
+      if (!this.required) return (this.valid = true);
+      if (!this.validateByValue()) {
+        this.currentValidationMessage = this.validationMessage;
+        return (this.valid = false);
+      }
+      if (!this.validateByRule()) {
+        this.currentValidationMessage = this.validationRule.message;
+        return (this.valid = false);
+      }
+      return (this.valid = true);
+    },
     validateByValue() {
-      return this.currentValue && this.currentValue.length > 0
+      return this.currentValue && this.currentValue.length > 0;
     },
     validateByRule() {
       if (!this.validationRule) return true;
-      return this.currentValue.match(this.validationRule.regex)
-    }
+      return this.currentValue.match(this.validationRule.regex);
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+@import "../../styles/vars";
 .v-input {
-  &.focused {
-    box-shadow: var(--input-focus-box-shadow);
-  }
+  display: block;
 
   &__label {
+    display: block;
     min-width: 70px;
-    margin-bottom: var(--indent-sm);
+    margin-bottom: var(--indent-xs);
     user-select: none;
     font-weight: bold;
-
+    font-size: var(--text-xs);
     @media (max-width: $mobile) {
       min-width: auto;
-      font-size: var(--text-xs);
     }
   }
 
@@ -149,6 +160,10 @@ export default {
     outline: none;
     font-size: var(--text-md);
     color: var(--color-font);
+
+    &:focus {
+      box-shadow: var(--input-focus-box-shadow);
+    }
 
     &[type="number"] {
       -moz-appearance: textfield;
