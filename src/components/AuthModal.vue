@@ -94,7 +94,7 @@ export default {
   }
 }
 .auth-modal-avatar {
-  background-color: var(--color-primary);
+  background-color: var(--color-bg-image);
   border-radius: var(--rounded-lg) 0 0 var(--rounded-lg);
   @media (max-width: $mobile) {
     border-radius: var(--rounded-lg) var(--rounded-lg) 0 0;
