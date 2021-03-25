@@ -168,9 +168,13 @@ export default {
     font-size: var(--text-md);
     color: var(--color-font);
 
-    &:-webkit-autofill {
-      background-color: var(--color-bg-second) !important;
-      appearance: auto !important;
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active
+    {
+      -webkit-box-shadow: 0 0 0 30px var(--color-bg-second) inset !important;
+      -webkit-text-fill-color: var(--color-font) !important;
     }
 
     &:focus {
